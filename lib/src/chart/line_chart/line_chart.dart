@@ -40,6 +40,7 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
   final List<ShowingTooltipIndicators> _showingTouchedTooltips = [];
 
   final Map<int, List<int>> _showingTouchedIndicators = {};
+  ShowingTooltipIndicators? prevToolTips;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,17 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
         _showingTouchedIndicators[barPos] = [touchedBarSpot.spotIndex];
       }
 
-      _showingTouchedTooltips.clear();
+      // _showingTouchedTooltips.clear();
+      // _showingTouchedTooltips.add(ShowingTooltipIndicators(sortedLineSpots));
+
+      if (event is FlLongPressStart) {
+        prevToolTips = ShowingTooltipIndicators(sortedLineSpots);
+      } else if (event is FlLongPressMoveUpdate) {
+        _showingTouchedTooltips.clear();
+        _showingTouchedTooltips.add(prevToolTips!);
+      } else {
+        _showingTouchedTooltips.clear();
+      }
       _showingTouchedTooltips.add(ShowingTooltipIndicators(sortedLineSpots));
     });
   }
