@@ -1424,6 +1424,9 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
   /// If line end is overlap with the dot, it will be automatically adjusted to the edge of the dot.
   final GetTouchLineY getTouchLineEnd;
 
+  // To determine wheathe longpress drag to calculate the difference
+  final bool longPressDrag;
+
   /// You can disable or enable the touch system using [enabled] flag,
   ///
   /// [touchCallback] notifies you about the happened touch/pointer events.
@@ -1452,12 +1455,14 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
     bool? handleBuiltInTouches,
     GetTouchLineY? getTouchLineStart,
     GetTouchLineY? getTouchLineEnd,
+    bool? longPressDrag,
   })  : touchTooltipData = touchTooltipData ?? LineTouchTooltipData(),
         getTouchedSpotIndicator =
             getTouchedSpotIndicator ?? defaultTouchedIndicators,
         touchSpotThreshold = touchSpotThreshold ?? 10,
         distanceCalculator = distanceCalculator ?? _xDistance,
         handleBuiltInTouches = handleBuiltInTouches ?? true,
+        longPressDrag = longPressDrag ?? false,
         getTouchLineStart = getTouchLineStart ?? defaultGetTouchLineStart,
         getTouchLineEnd = getTouchLineEnd ?? defaultGetTouchLineEnd,
         super(enabled ?? true, touchCallback, mouseCursorResolver);
@@ -1475,6 +1480,7 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
     GetTouchLineY? getTouchLineStart,
     GetTouchLineY? getTouchLineEnd,
     bool? handleBuiltInTouches,
+    bool? longPressDrag,
   }) {
     return LineTouchData(
       enabled: enabled ?? this.enabled,
@@ -1488,6 +1494,7 @@ class LineTouchData extends FlTouchData<LineTouchResponse> with EquatableMixin {
       getTouchLineStart: getTouchLineStart ?? this.getTouchLineStart,
       getTouchLineEnd: getTouchLineEnd ?? this.getTouchLineEnd,
       handleBuiltInTouches: handleBuiltInTouches ?? this.handleBuiltInTouches,
+      longPressDrag: longPressDrag ?? this.longPressDrag,
     );
   }
 

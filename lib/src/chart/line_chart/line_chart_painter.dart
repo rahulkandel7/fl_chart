@@ -297,10 +297,13 @@ class LineChartPainter extends AxisChartPainter<LineChartData> {
 
     final data = holder.data;
 
-    // Storing previously touched data
-    prevIndicatorList.add(barData.showingIndicators.first);
-    // add the previous data to the show indicator list
-    barData.showingIndicators.add(prevIndicatorList.first);
+    // check wheather long press drag is enabled or not
+    if (data.lineTouchData.longPressDrag) {
+      // Storing previously touched data
+      prevIndicatorList.add(barData.showingIndicators.first);
+      // add the previous data to the show indicator list
+      barData.showingIndicators.add(prevIndicatorList.first);
+    }
 
     // Todo technical debt, we can read the TouchedSpotIndicatorData directly,
     // Todo instead of mapping indexes to TouchedSpotIndicatorData

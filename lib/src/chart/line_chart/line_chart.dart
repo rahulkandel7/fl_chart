@@ -40,7 +40,11 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
   final List<ShowingTooltipIndicators> _showingTouchedTooltips = [];
 
   final Map<int, List<int>> _showingTouchedIndicators = {};
+
+  //to store previous touch tolltip data
   ShowingTooltipIndicators? prevToolTips;
+  // check isLongpress enable if enable then we will show the previous touch tooltip information
+  bool isLongPressDragEnable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +75,7 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
 
   LineChartData _getData() {
     final lineTouchData = widget.data.lineTouchData;
+    isLongPressDragEnable = widget.data.lineTouchData.longPressDrag;
     if (lineTouchData.enabled && lineTouchData.handleBuiltInTouches) {
       _providedTouchCallback = lineTouchData.touchCallback;
       return widget.data.copyWith(
@@ -109,9 +114,10 @@ class _LineChartState extends AnimatedWidgetBaseState<LineChart> {
       // _showingTouchedTooltips.clear();
       // _showingTouchedTooltips.add(ShowingTooltipIndicators(sortedLineSpots));
 
-      if (event is FlLongPressStart) {
+      if (event is FlLongPressStart && isLongPressDragEnable) {
+        // isLongPressDragEnable is true then store the previous tooltip info
         prevToolTips = ShowingTooltipIndicators(sortedLineSpots);
-      } else if (event is FlLongPressMoveUpdate) {
+      } else if (event is FlLongPressMoveUpdate && isLongPressDragEnable) {
         _showingTouchedTooltips.clear();
         _showingTouchedTooltips.add(prevToolTips!);
       } else {

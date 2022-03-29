@@ -146,7 +146,7 @@ abstract class RenderBaseChart<R extends BaseTouchResponse> extends RenderBox
       _latestMouseCursor = _mouseCursorResolver!(event, response);
     }
 
-    if (!(event is FlLongPressMoveUpdate)) {
+    if (event is! FlLongPressMoveUpdate) {
       LineChartPainter.prevIndicatorList.clear();
     }
   }
